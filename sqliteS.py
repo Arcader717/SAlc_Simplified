@@ -10,17 +10,17 @@ def setup(Optional[path]: string):
 				if you wish to use sqlite's :memory: identifier, leave path empty
 
         Returns a Dictionary containing:
-				A SQLAlchemy Engine instance named engine, and
+				An SQLAlchemy Engine instance named engine, and
 				A SQLAlchemy Connection instance named connection
     """
 		if path.startswith("sqlite:///", 0)
-			raise ValueError("thats how you would normally setup a connection to sqlite, but I've got it covered from this end!") # Throws an error if the user has the path include 'sqlite:///' 
+			raise ValueError("That's how you would normally setup a connection to sqlite, but I've got it covered from this end!") # Throws an error if the user has the path include 'sqlite:///' 
 		elif:
 			e = create_engine("sqlite://")
 			conn = e.connect()
 			dict = {"engine": e, "connection": conn}
 			return dict
 		else:
-    	e = create_engine(f"sqlite:///{path}")
+    			e = create_engine(f"sqlite:///{path}")
 			conn = e.
 			return dict
