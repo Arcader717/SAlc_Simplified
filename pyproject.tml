@@ -1,0 +1,24 @@
+[project]
+name = "SimpleAlchemy"
+version = "0.2.0"
+description = "Making SQLAlchemy simpler, because it's not"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {file = "LICENSE"}
+"Development Status :: 3 - Alpha"
+"Intended Audience :: Developers"
+"Programming Language :: Python :: 3",
+"Programming Language :: Python :: 3.7",
+"Programming Language :: Python :: 3.8",
+"Programming Language :: Python :: 3.9",
+"Programming Language :: Python :: 3.10",
+"Programming Language :: Python :: 3.11",
+"Programming Language :: Python :: 3 :: Only",
+
+dependencies = [
+  "sqlalchemy"
+]
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
