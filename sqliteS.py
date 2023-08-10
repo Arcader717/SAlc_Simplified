@@ -22,5 +22,6 @@ def setup(Optional[path]: string):
 			return dict
 		else:
     			e = create_engine(f"sqlite:///{path}")
-			conn = e.
+			conn = e.connect()
+			dict = {"engine": e, "connection": conn}
 			return dict
