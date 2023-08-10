@@ -1,5 +1,5 @@
 [project]
-name = "SAlcSimplified"
+name = "SSQLA"
 version = "0.2.1"
 description = "Making SQLAlchemy simpler, because it's not"
 readme = "README.md"
