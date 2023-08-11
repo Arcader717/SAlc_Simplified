@@ -25,3 +25,6 @@ def setup(Optional[path]: string):
 			conn = e.connect()
 			dict = {"engine": e, "connection": conn}
 			return dict
+
+
+def 
