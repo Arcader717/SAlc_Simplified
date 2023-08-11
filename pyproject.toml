@@ -1,6 +1,6 @@
 [project]
 name = "SSQLA"
-version = "0.3.0nA"
+version = "0.3a"
 description = "Making SQLAlchemy simpler, because it's not"
 readme = "README.md"
 requires-python = ">=3.7"
