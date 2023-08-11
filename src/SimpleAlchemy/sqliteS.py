@@ -2,17 +2,17 @@ from sqlalchemy import create_engine, connect, text
 import string as s
 
 def setup(Optional[path]: string):
-    """ Used to make an engine and a connection 
+		""" Used to make an engine and a connection 
 
 
-        Path: The file path used to make the connection
-        for relative paths, don't use a / at the beginning, but for absolute paths, make sure to use a / at the beginning
+				Path: The file path used to make the connection
+				for relative paths, don't use a / at the beginning, but for absolute paths, make sure to use a / at the beginning
 				if you wish to use sqlite's :memory: identifier, leave path empty
 
-        Returns a Dictionary containing:
+				Returns a Dictionary containing:
 				An SQLAlchemy Engine instance named engine, and
 				A SQLAlchemy Connection instance named connection
-    """
+		"""
 		if path.startswith("sqlite:///", 0):
 			raise ValueError("That's how you would normally setup a connection to sqlite, but I've got it covered from this end!") # Throws an error if the user has the path include 'sqlite:///' 
 		elif:
@@ -21,7 +21,7 @@ def setup(Optional[path]: string):
 			dict = {"engine": e, "connection": conn}
 			return dict
 		else:
-    	e = create_engine(f"sqlite:///{path}")
+			e = create_engine(f"sqlite:///{path}")
 			conn = e.connect()
 			dict = {"engine": e, "connection": conn}
 			return dict
@@ -30,42 +30,42 @@ def setup(Optional[path]: string):
 class SQL:
 		""" This is a class that is used to complete SQL statements
 
- 				Methods:
-		 		createTable 
-		 		createColumn
+				Methods:
+				createTable 
+				createColumn
 
-	 			Attributes:
+				Attributes:
 				None
 		"""
 		def createColumn(columnName: string, datatype[optional]: string, **options):
-			""" Used as a way to streamline the making of a column, but is entirely optional, if you know how to build it yourself
+		""" Used as a way to streamline the making of a column, but is entirely optional, if you know how to build it yourself
 
-					----------
+				----------
 	
-	 				columnName: Column name is a required field, which is what will be used when trying to call for it in SQL statements		
+				columnName: Column name is a required field, which is what will be used when trying to call for it in SQL statements		
 
 
 
-		 			datatype: Data type is optional, and is literally just what type it is, defaults to NUMERIC
+				datatype: Data type is optional, and is literally just what type it is, defaults to NUMERIC
 
 
 
-	 				options: options is an optional field, where you can pass things like unique and not null.
+				options: options is an optional field, where you can pass things like unique and not null.
 					You can pass:
-		 				unique: adds the UNIQUE statement to the column
-			 			NotNull: adds the NOT NULL statement
-			 			PrimaryKey: adds the PRIMARY KEY statement, and if passed, unique or NotNull will automatically be considered true
-			 		if none are passed, they will all default to false
+						unique: adds the UNIQUE statement to the column
+						NotNull: adds the NOT NULL statement
+						PrimaryKey: adds the PRIMARY KEY statement, and if passed, unique or NotNull will automatically be considered true
+					if none are passed, they will all default to false
 
-	 				they must be passed as strings or an error will be thrown
+					they must be passed as strings or an error will be thrown
 			
 					Please remember that in a table, there needs to be at least one column with a primary key
-		 
-			 		Foreign Keys, check, default, and index are not currently supported. They will be in the future
+
+					Foreign Keys, check, default, and index are not currently supported. They will be in the future
 
 					----------
 
-	 				Returns a dictionary of strings and booleans
+					Returns a dictionary of strings and booleans
 	 		"""
 
 			columnData = {
@@ -74,7 +74,7 @@ class SQL:
 				"unique": False,
 				"notnull": False,
 				"primarykey": False
-}
+			}
 
 			if columnName is None:
 				raise ValueError("columnName can't be empty, it must be a string")
@@ -87,10 +87,10 @@ class SQL:
 					columnData['dataType'] = datatype.upper()
 				elif datatype.upper() != "TEXT" or "NUMERIC" or "INTEGER" or "REAL" or "NONE":
 					raise ValueError("datatype must be one of the allowed data types for sqlite, including, text, numeric, integer, real, or none. I would suggest visiting https://geeksforgeeks.org/sqlite-data-types if you don't know what those options mean"
-				
+
 				else:
 					columnData['dataType'] = datatype.upper()
-					
+
 				if len(options) > 0: # checks if any kwargs were passed
 					if len(options) < 4: # checks if the number of kwargs passed is less than 4
 						for x in options.values():
@@ -112,9 +112,9 @@ class SQL:
 						raise ValueError("Their isn't more than three passable kwargs, unique, notnull, or primarykey. Any more than three kwargs, and I won't know what to do with the rest")
 				else:
 					return columnData
-					
-			
-	
+
+
+
 		def createTable(table: string, columns: dict):
 			""" Used to create a table for you
 
@@ -152,7 +152,7 @@ class SQL:
 						global dictUnique = True
 					else:
 						global dictUnique = False
-							
+
 					if dict['notnull'] is True: # checking if the Not Null property is true
 						global dictNotNull = True
 					else:
@@ -177,7 +177,7 @@ class SQL:
 							global alreadyPKey = True
 						else:
 							global sqlPrimaryKey = ""
-	
+
 					elif alreadyPKey is True:
 						raise RuntimeError("It appears that you have set multiple columns to be primary keys, and SQL does not allow for multiple primary keys. I suggest you change the settings of the column you don't want to be the primary key")
 
