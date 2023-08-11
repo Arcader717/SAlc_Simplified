@@ -38,7 +38,7 @@ class SQL:
 				None
 		"""
 		def createColumn(columnName: string, datatype[optional]: string, **options):
-			""" Used as a way to stream line making a column, but is entirely optional, if you know how to build it yourself
+			""" Used as a way to streamline the making of a column, but is entirely optional, if you know how to build it yourself
 
 					----------
 	
@@ -50,7 +50,7 @@ class SQL:
 
 
 
-	 				options: options is a optional field, where you can pass things like unique and not null.
+	 				options: options is an optional field, where you can pass things like unique and not null.
 					You can pass:
 		 				unique: adds the UNIQUE statement to the column
 			 			NotNull: adds the NOT NULL statement
@@ -86,7 +86,7 @@ class SQL:
 
 					columnData['dataType'] = datatype.upper()
 				elif datatype.upper() != "TEXT" or "NUMERIC" or "INTEGER" or "REAL" or "NONE":
-					raise ValueError("datatype must be one of the allowed data types for sqlite, which includes, text, numeric, integer, real, or none. I would suggest visiting https://geeksforgeeks.org/sqlite-data-types if you don't know what those options mean"
+					raise ValueError("datatype must be one of the allowed data types for sqlite, including, text, numeric, integer, real, or none. I would suggest visiting https://geeksforgeeks.org/sqlite-data-types if you don't know what those options mean"
 				
 				else:
 					columnData['dataType'] = datatype.upper()
@@ -115,7 +115,7 @@ class SQL:
 					
 			
 	
-		def createTable(table: string, unique[optional]: boolean = True,):
+		def createTable(table: string, columns: dict):
 			""" Used to create a table for you
 
 					-----------
@@ -124,23 +124,68 @@ class SQL:
 
 
 
-		 			unique: Unique is basically asking if you want the SQL statement "IF NOT EXISTS" to be used in making the table, defaults to true
+					columns: Columns is a dictionary, that is composed of multiple dictionaries. These nested dictionaries contain data about creating each individual column. You can use the SQL.createColumns() method to make the process easier
 
 
 					-----------
 
 					Returns nothing
 			"""
+			dictionary = {}
+			alreadyPKey = False
 			if table is None: # Testing if table is empty
 				raise ValueError("Table is empty, you must provide a table name. All you have to provide is a string") # If table is empty, throw an error saying that it is empty
-			elif table is not None: 
-				if unique is None:
-					unique = True
-				if unique is True:
-					sql = f"IF NOT EXISTS CREATE TABLE {table}"
+			elif type(table) != type("string"):
+				raise TypeError("Parameter 'table' is supposed to be a string") 
+			elif columns is None:
+				raise ValueError("The columns parameter is empty. It is a dictionary made of dictionaries, containing the data needed to create a column. You can use SQL.createColumns() to help create the columns. Remember, each time you call it, the function only makes ONE column, so you will need to repeat it to get the desired number of columns")
+			elif type(columns) != type(dictionary):
+				raise TypeError("Parameter 'columns' is meant to be a dictionary")
+			elif table is not None =: 
+				tableSQL = f"IF NOT EXISTS CREATE TABLE {table} ("
+				for dict in columns.values():
+					if type(dict) != type(dictionary):
+						raise TypeError("Parameter 'columns' is meant to be a dictionary made of dictionaries, with each dictionary containing data that details how a column is made")
+					global dictName = dict['columnName']
+					global dictDataType = dict['dataType']
+					if dict['unique'] is True: # Checking if the Unique property is true
+						global dictUnique = True
+					else:
+						global dictUnique = False
+							
+					if dict['notnull'] is True: # checking if the Not Null property is true
+						global dictNotNull = True
+					else:
+						global dictNotNull = False
 
+					if dict['primarykey'] is True: # checking if the Primary Key property is true
+						global dictPrimaryKey = True
+					else:
+						global dictPrimaryKey = False
 
+					if dictUnique is True:
+						global sqlUnique = " UNIQUE"
+					else:
+						global sqlUnique = ""
+					if dictNotNull is True:
+						global sqlNotNull = " NOT NULL"
+					else:
+						global sqlNotNull = ""
+					if alreadyPKey is False:
+						if dictPrimaryKey is True:
+							global sqlPrimaryKey = " PRIMARY KEY"
+							global alreadyPKey = True
+						else:
+							global sqlPrimaryKey = ""
+	
+					elif alreadyPKey is True:
+						raise RuntimeError("It appears that you have set multiple columns to be primary keys, and SQL does not allow for multiple primary keys. I suggest you change the settings of the column you don't want to be the primary key")
 
+					columnSql = f"{dictName} {dictDataType}{sqlUnique}{sqlNotNull}{sqlPrimaryKey},"
+					global tableSQL += columnSql # Add the column data to the table data
+
+				position = tableSQL.count(',')
+				global newTableSQL = tableSQL.replace(',', '', position)
 
 
 
