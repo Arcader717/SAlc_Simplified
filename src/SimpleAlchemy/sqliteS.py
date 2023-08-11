@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, connect. text
+from sqlalchemy import create_engine, connect, text
 import string as s
 
 def setup(Optional[path]: string):
