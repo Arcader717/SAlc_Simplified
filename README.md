@@ -17,5 +17,6 @@
 ***
 
 ## Links
-
+[PyPi Page](https://pypi.org/project/SSQLA)
+[SSQLA Testing Grounds (On replit)](https://replit.com/@Arcader717/SSQLA-Testing-Grounds)
 
