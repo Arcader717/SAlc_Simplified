@@ -1,6 +1,6 @@
 [project]
 name = "SSQLA"
-version = "0.3a1"
+version = "0.3.1a"
 description = "Making SQLAlchemy simpler, because it's not"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -28,5 +28,6 @@ build-backend = "setuptools.build_meta"
 [project.urls]
 "Homepage" = "https://github.com/Arcader717/SAlc_Simplified"
 "Bug Reports" = "https://github.com/Arcader717/SAlc_Simplified/issues"
+"PyPi Project Page" = "https://pypi.org/project/SSQLA"
 
 [tool.setuptools_scm]
