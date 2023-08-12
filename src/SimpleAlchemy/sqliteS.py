@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, Table, MetaData
 import string as s
 
 
@@ -190,12 +190,35 @@ class SQL:
       
       newTableSQL = tableSQL.rstrip(',') + ');'
 
-    print(newTableSQL)
     conn = engine.connect()
-    print(conn)
     conn.execute(text(newTableSQL))
     conn.commit()
     conn.close()
     
+  def dropTable(table: str, engine):
+    """
+    ----------
+    
+    Drops a table from a SQLite Database
 
+		----------
+
+		WARNING! THIS IS AN IRREVERSIBLE ACTION! You will lose all data on the table, and the table itself
+
+		----------
+
+		table: The name of the table that you want to drop. Must be a string, or you will recieve an error.
+
+ 		engine: Engine is a SQLAlchemy Engine. You can create one using the setup() function
+
+		----------
+
+ 		Returns nothing, except for sadness for the lost table
+		"""
+    
+    
+    if table == "":
+      raise ValueError("table can't be an empty string. Use a table name that you have setup")
+    meta = MetaData()
+    Table(table, meta, autoload_with=engine).drop(engine)
       
