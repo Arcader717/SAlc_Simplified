@@ -2,23 +2,36 @@ from sqlalchemy import create_engine, text, Table, MetaData
 import string as s
 
 
-def setup(path: str):
+def setup(path: str, **extras):
   """Used to make an engine and a connection 
 
     Path: The file path used to make the connection
     for relative paths, don't use a / at the beginning, but for absolute paths, make sure to use a / at the beginning
     if you wish to use sqlite's :memory: identifier, leave path empty
 
+
+		extras: Extras is a kwarg, and you can pass:
+			Echo: Sets the echo setting for the SQLAlchemy Engine to whatever you pass it to be. Defaults to False
+
+		-----
+	
     Returns a SQLAlchemy Engine Instance
-    """
+    """ 
+	if "echo" in extras.keys():
+		if extras['echo'] == True:
+			echo = True
+		elif extras['echo'] == False:
+			echo = False
+	elif "echo" not in extras.keys():
+		echo = False
   if path.startswith('sqlite://'):
     raise ValueError(
       "That's how you would normally setup a connection to sqlite, but I've got it covered from this end!"
     )  # Throws an error if the user has the path include 'sqlite:///'
   elif path is None:
-    e = create_engine("sqlite://")
+    e = create_engine("sqlite://", echo=echo)
   else:
-    e = create_engine("sqlite:///" + path)
+    e = create_engine("sqlite:///" + path, echo=echo)
   return e
 
 
