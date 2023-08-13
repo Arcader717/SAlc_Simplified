@@ -11,8 +11,8 @@
 
 ## Roadmap
 
-- v0.4-alpha - I plan to finish functionality for the createTable function and the createColumn function
-- v0.5-alpha - I plan to add functionality for basic sql statements like INSERT, UPDATE, and POP.
+- v0.4 - I plan to finish functionality for the createTable function and the createColumn function
+- v0.5 - I plan to add functionality for basic sql statements like INSERT, UPDATE, and POP.
 
 ***
 
@@ -21,3 +21,5 @@
 
 [SSQLA Testing Grounds (On replit)](https://replit.com/@Arcader717/SSQLA-Testing-Grounds)
 
+## What I'm working on
+- Im working on documentation using readthedocs
