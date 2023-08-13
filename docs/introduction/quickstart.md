@@ -16,7 +16,7 @@ Next you can import setup using `from SimpleAlchemy.sqliteS import setup`
 
 Once you've made a database file you can use `engine_name = setup("{example_db_file}")` to setup an engine. `{example_db_file}` is the database file name, and `engine_name` can be whatever you want.
 
-> Important
+> **Important**
 > 
 > Make sure to remember the engine name, as it is used often through out SSQLA
 
