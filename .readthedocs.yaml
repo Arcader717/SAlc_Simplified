@@ -5,7 +5,7 @@ version: 2
   tools: 
     python: "3.11"
 
-    configuration: docs/conf.py
+    configuration: mkdocs.yml
 
 python:
   install:
