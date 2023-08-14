@@ -8,4 +8,4 @@ All SSQLA functions mentioned will show what it correlates to in SQLAlchemy
 **[Quickstart](https://ssqla.readthedocs.io/en/latest/introduction/quickstart)** You set up the engine here
 
 ## Reference
-**[SQLite](https://ssqla.readthedocs.io/en/latest/ref/api)**
+**[SQLite](https://ssqla.readthedocs.io/en/latest/ref/api)** API reference for SQLite
