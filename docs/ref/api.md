@@ -39,8 +39,17 @@ Has the reference info about the SQLite version of SSQLA
       - Parameters:
         - table (string) - The name of the table. Used to call upon the table
         - columns (list) - A list of dictionaries, with full information on how to build each column
-        - engine (SQLAlchemy.engine) - The engine used to complete SQL statements with SQLAlchemy. Refer to the [setup](https://ssqla.readthedocs.io/en/latest/ref/api
+        - engine (SQLAlchemy.engine) - The engine used to complete SQL statements with SQLAlchemy. Refer to the [quickstart](https://ssqla.readthedocs.io/en/latest/introduction/quickstart)
       - Raises:
         - [ValueError](https://docs.python.org/3/library/exceptions.html#ValueError) - table is empty, you must provide a table name
-        - [RuntimeError](https://docs.python.org/3/library/exceptions.html#RuntimeError) - 
+        - [RuntimeError](https://docs.python.org/3/library/exceptions.html#RuntimeError) - It appears that you have multiple columns with primary key set to true, SQL doesn't accept
+
+    - `dropTable(table: str, engine)`
+      - Used to drop(delete) a SQL table
+      - Returns nothing
+      - Parameters:
+        - table (string) - The name of the table you want to drop
+        - engine (SQLAlchemy.engine) - The engine used to complete SQL statements with SQLAlchemy. Refer to the [quickstart](https://ssqla.readthedocs.io/en/latest/introduction/quickstart)
+      - Raises:
+        - [ValueError](https://docs.python.org/3/library/exceptions.html#ValueError) - table can't be an empty screen. Use a table name that you have set up
   
