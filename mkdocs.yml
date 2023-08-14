@@ -6,3 +6,4 @@ lang: en
 nav:
   - Home: index.md
   - Quickstart: introduction/quickstart.md
+theme: readthedocs
