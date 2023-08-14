@@ -9,7 +9,7 @@ The first step is to import the SQL class, using `from SimpleAlchemy.sqliteS imp
 ***
 # Makiing the Columns
 
-Next you need to make a dictionary of the column, containing the data of how you want the column setup. 
+Next, you need to make a dictionary of the column, containing the data of how you want the column setup. 
 
 While you could make a dictionary yourself, using `dictName = {"columnName": "", "columnDataType": "", "unique": False, "notnull": False, "primarykey": False}`, you could also use the `SQL.createColumn()` method.
 
@@ -23,17 +23,17 @@ To get that you would do `SQL.createColumn("columnName",  "numeric")` and use a 
 ***
 # Making The Table
 
-After you make your columns, you can put them in a list and then put them into the `SQL.createTable()` method to make a table. `createTable()`'s syntax is `SQL.createTable(table: str, columns: list, engine)` where table is just the table name, and columns is the list that I told you about earlier, and engine is from the `setup()` function
+After you make your columns, you can put them in a list and then put them into the `SQL.createTable()` method to make a table. `createTable()`'s syntax is `SQL.createTable(table: str, columns: list, engine)` where `table` is just the table name, and `columns` is the list that I told you about earlier, and `engine` is from the `setup()` function
 
 ## Extra!
 
-If you create a table that you decide that you had messed up, or just want to flat out delete it, you can use the `SQL` class method `dropTable()` to delete the table and all the data inside of it.
+If you create a table that you decide that you had messed up, or just want to flat-out delete it, you can use the `SQL` class method `dropTable()` to delete the table and all the data inside of it.
 
 > **Warning!**
 >
-> Droping a table means losing the table and all of its data, and it will be irreversible, so think carefullly before deciding to drop a table
+> Dropping a table means losing the table and all of its data, and it will be irreversible, so think carefully before deciding to drop a table
 
-syntax: `SQL.dropTable(table: str)` with table being the table you want to drop
+syntax: `SQL.dropTable(table: str)` with `table` being the table you want to drop
 
 # Final Example
 > **Note!**
