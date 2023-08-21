@@ -1,6 +1,43 @@
-from sqlalchemy import create_engine, text, Table, MetaData
+from sqlalchemy import create_engine, text, Table, MetaData, Column, Integer, String, UniqueConstrait
 import string as s
 
+def colData(colName, datatype, unique, nullable, PKey):
+	if datatype.lower() == "integer":
+		if unique == True:
+			if nullable == True and PKey == True:
+				data = Column(f"{colName}", Integer, unique=True, nullable=True, primary_key=True)
+			elif nullable == True and PKey == False:
+				data = Column(f"{colName}", Integer, unique=True, nullable=True, primary_key=False)
+			elif nullable == False and PKey == True:
+				data = Column(f"{colName}", Integer, unique=True, nullable=False, primary_key=True)
+			elif nullable == False and PKey == False:
+				data = Column(f"{colName}", Integer, unique=True, nullable=False, primary_key=True)
+		elif nullable == True and unique == False:
+			if PKey == True:
+				data = Column(f"{colName}", Integer, unique=False, nullable=True, primary_key=True)
+			elif PKey == False:
+				data = Column(f"{colName}", Integer, unique=False, nullable=True, primary_key=False)
+		elif PKey == True and unique == False and nullable == False:
+			data = Column(f"{colName}", Integer, unique=False, nullable=False, primary_key=False)
+	elif datatype.lower() == "string":
+		if unique == True:
+			if nullable == True and PKey == True:
+				data = Column(f"{colName}", String, unique=True, nullable=True, primary_key=True)
+			elif nullable == True and PKey == False:
+				data = Column(f"{colName}", String, unique=True, nullable=True, primary_key=False)
+			elif nullable == False and PKey == True:
+				data = Column(f"{colName}", String, unique=True, nullable=False, primary_key=True)
+			elif nullable == False and PKey == False:
+				data = Column(f"{colName}", String, unique=True, nullable=False, primary_key=True)
+		elif nullable == True and unique == False:
+			if PKey == True:
+				data = Column(f"{colName}", String, unique=False, nullable=True, primary_key=True)
+			elif PKey == False:
+				data = Column(f"{colName}", String, unique=False, nullable=True, primary_key=False)
+		elif PKey == True and unique == False and nullable == False:
+			data = Column(f"{colName}", String, unique=False, nullable=False, primary_key=False)
+
+	return data
 
 def setup(path: str, **extras):
   """Used to make an engine and a connection 
@@ -53,13 +90,13 @@ class SQL:
 
             columnName: Column name is a required field, which is what will be used when trying to call for it in SQL statements
 
-            datatype: Data type is optional, and is literally just what type it is, defaults to NUMERIC
+            datatype: Data type is optional, and is literally just what type it is, defaults to Integer
 
             options: options is an optional field, where you can pass things like unique and not null.
                      You can pass:
                          unique: adds the UNIQUE statement to the column
-                         notnull: adds the NOT NULL statement
-                         primarykey: adds the PRIMARY KEY statement, and if passed, unique or notnull will automatically be considered true
+                         nullable: adds the NOT NULL statement if False
+                         primarykey: adds the PRIMARY KEY statement
                      if none are passed, they will all default to false
 
                      they must be passed as strings or an error will be thrown
@@ -72,51 +109,36 @@ class SQL:
 
             Returns a dictionary of strings and booleans
         """
-    columnData = {
-      "columnName": "",
-      "dataType": "",
-      "unique": False,
-      "notnull": False,
-      "primarykey": False
-    }
+		if columnName == "":
+			raise ValueError("columnName can't be empty")
+		else:
+			Unique = False
+			Nullable = False
+			PrimaryKey = False
+			if "unique" in options.keys():
+				if options['unique'] == False:
+					Unique = False
+				elif options['unique'] == True:
+					Unique = True
+			else:
+				Unique = False
+			if "nullable" in options.keys():
+				if options['nullable'] == False:
+					Nullable = False
+				elif options['nullable'] == True:
+					Nullable = True
+			elif "nullable" not in options.keys():
+				Nullable = False
+			if "primarykey" in options.keys():
+				if options['primarykey'] == False:
+					PrimaryKey = False
+				elif options['primarykey' == True:
+					PrimaryKey = True
+			elif "primarykey" not in options.keys():
+				PrimaryKey = False
+		data = colData(columnName, datatype, unique=Uniquef, nullable=Nullable, PKey=PrimaryKey)
+		return data
 
-    if columnName == "" or columnName is None:
-      raise ValueError("columnName can't be empty, it must be a string")
-    else:
-      columnData['columnName'] = columnName
-
-    if datatype == "" or datatype is None:
-      datatype = "NUMERIC"
-
-    datatype_upper = datatype.upper()
-    if datatype_upper not in ["TEXT", "NUMERIC", "INTEGER", "REAL", "NONE"]:
-      raise ValueError(
-        "datatype must be one of the allowed data types for sqlite, including text, numeric, integer, real, or none. I would suggest visiting https://geeksforgeeks.org/sqlite-data-types if you don't know what those options mean"
-      )
-    columnData['dataType'] = datatype_upper
-    if "unique" not in options.keys():
-      columnData['unique'] = False
-      options['unique'] = False
-    if "notnull" not in options.keys():
-      columnData['notnull'] = False
-      options['notnull'] = False
-    if "primarykey" not in options.keys():
-      columnData['primarykey'] = False
-      options['primarykey'] = False
-    if options['unique'] == True:
-      columnData['unique'] = True
-    if options['notnull'] == True:
-      columnData['notnull'] = True
-    if options['primarykey'] == True:
-      columnData['primarykey']
-
-    if options:
-      for option in options:
-        if len(options) == 0:
-          raise ValueError(
-            f"The kwarg {option} you sent isn't allowed, you can only send unique, notnull, or primarykey. Don't worry, they are case-insensitive"
-          )
-    return columnData
 
   def createTable(table: str, columns: list, engine):
     """ Used to create a table for you
