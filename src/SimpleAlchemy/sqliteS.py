@@ -2,43 +2,30 @@ from sqlalchemy import create_engine, text, Table, MetaData, Column, Integer, St
 import string as s
 
 def colData(colName, datatype, unique, nullable, PKey):
+	data = None
 	if datatype.lower() == "integer":
 		if unique == True:
-			if nullable == True and PKey == True:
-				data = Column(f"{colName}", Integer, unique=True, nullable=True, primary_key=True)
-			elif nullable == True and PKey == False:
-				data = Column(f"{colName}", Integer, unique=True, nullable=True, primary_key=False)
-			elif nullable == False and PKey == True:
-				data = Column(f"{colName}", Integer, unique=True, nullable=False, primary_key=True)
-			elif nullable == False and PKey == False:
-				data = Column(f"{colName}", Integer, unique=True, nullable=False, primary_key=True)
+			if nullable == True:
+				if PKey == True:
+					data = Column(colName, Integer, unique=True, nullalbe=True, primary_key=True)
+				elif PKey == False:
+					data = Column(colName, Integer, unique=True, nullable=True)
+			elif nullable == False:
+				if PKey == True:
+					data = Column(colName, Integer, unique=True, nullable=False, primary_key=True)
+				elif PKey == False:
+					data = Column(colName, Integer, unique=True, nullable=False)
 		elif nullable == True and unique == False:
 			if PKey == True:
-				data = Column(f"{colName}", Integer, unique=False, nullable=True, primary_key=True)
+				data = Column(colName, Integer, nullable=True, PKey=True)
 			elif PKey == False:
-				data = Column(f"{colName}", Integer, unique=False, nullable=True, primary_key=False)
-		elif PKey == True and unique == False and nullable == False:
-			data = Column(f"{colName}", Integer, unique=False, nullable=False, primary_key=False)
-	elif datatype.lower() == "string":
-		if unique == True:
-			if nullable == True and PKey == True:
-				data = Column(f"{colName}", String, unique=True, nullable=True, primary_key=True)
-			elif nullable == True and PKey == False:
-				data = Column(f"{colName}", String, unique=True, nullable=True, primary_key=False)
-			elif nullable == False and PKey == True:
-				data = Column(f"{colName}", String, unique=True, nullable=False, primary_key=True)
-			elif nullable == False and PKey == False:
-				data = Column(f"{colName}", String, unique=True, nullable=False, primary_key=True)
-		elif nullable == True and unique == False:
-			if PKey == True:
-				data = Column(f"{colName}", String, unique=False, nullable=True, primary_key=True)
-			elif PKey == False:
-				data = Column(f"{colName}", String, unique=False, nullable=True, primary_key=False)
-		elif PKey == True and unique == False and nullable == False:
-			data = Column(f"{colName}", String, unique=False, nullable=False, primary_key=False)
-
-	return data
-
+				data = Column(colName, Integer, nullable=True)
+			elif PKey == True and unique == False and nullable == False:
+				data = Column(colName, Integer, nullable=False, primary_key=True)
+			elif PKey == False and unique == False and nullable == False:
+				data = Column(colName, Integer, nullable=False)
+  return data
+	
 def setup(path: str, **extras):
   """Used to make an engine and a connection 
 
@@ -132,11 +119,11 @@ class SQL:
 			if "primarykey" in options.keys():
 				if options['primarykey'] == False:
 					PrimaryKey = False
-				elif options['primarykey' == True:
+				elif options['primarykey'] == True:
 					PrimaryKey = True
 			elif "primarykey" not in options.keys():
 				PrimaryKey = False
-		data = colData(columnName, datatype, unique=Uniquef, nullable=Nullable, PKey=PrimaryKey)
+		data = colData(columnName, datatype, unique=Unique, nullable=Nullable, PKey=PrimaryKey)
 		return data
 
 
