@@ -1,5 +1,5 @@
 [project]
-name = "SSQLA"
+name = "ssqla"
 version = "1.4.1a"
 description = "Making SQLAlchemy simpler, because it's not"
 readme = "README.md"
