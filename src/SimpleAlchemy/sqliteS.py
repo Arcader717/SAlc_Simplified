@@ -127,7 +127,7 @@ class SQL:
 		return data
 
 
-  def createTable(table: str, columns: list, engine):
+  def createTable(table: str, columns: list, engine, metadata):
     """ Used to create a table for you
 
 					-----------
@@ -136,17 +136,20 @@ class SQL:
 
 
 
-					columns: Columns is a list, that is composed of multiple dictionaries. These nested dictionaries contain data about creating each individual column. You can use the SQL.createColumns() method to make the process easier
+					columns: Columns is a list, that is composed of multiple dictionaries. These nested dictionaries contain data about creating each individual column. You can use the colData function to streamline the process
 
 
           engine: Engine is a SQLAlchemy Engine instance. You can use the setup() function to get the instance
+
+
+   					metadata: Metadata is the SQLAlchemy MetaData instance
 
 
 					-----------
 
 					Returns nothing
 			"""
-    dictionary = {}
+    dictionary = []
     alreadyPKey = False
     if table == "" or table is None:  # Testing if table is empty
       raise ValueError(
@@ -217,7 +220,7 @@ class SQL:
     conn.commit()
     conn.close()
     
-  def dropTable(table: str, engine):
+  def dropTable(table: str, engine, metadata):
     """
     ----------
     
